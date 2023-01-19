@@ -30,10 +30,6 @@ export default function Home() {
     setConversionMeasurements(categories[changeTo].measurements);
   }
 
-  /* ===================== */
-  
-  /* ===================== */
-
   useEffect(() => {
     setConversionMeasurements(categories.Temperature.measurements);
   }, [])
@@ -47,7 +43,7 @@ export default function Home() {
   }, [conversionMeasurements])
 
   useEffect(() => {
-    handleConversion(conversionUnits, (x : string) => setConvertedValue(x));
+    handleConversion(conversionUnits, setConvertedValue);
   }, [conversionUnits])
 
   return (
@@ -64,7 +60,7 @@ export default function Home() {
         </select>
         
         <div>
-          <select value={conversionUnits.input} id='input-dropdown' defaultValue='Fahrenheit' onChange={(event) => handleUnitChange('input', event.target.value)}>
+          <select value={conversionUnits.input} id='input-dropdown' onChange={(event) => handleUnitChange('input', event.target.value)}>
             {populateConversionDropdown()}
           </select>
           <label htmlFor='conversion-input'>Input: </label>
@@ -72,7 +68,7 @@ export default function Home() {
         </div>
         
         <div>
-          <select value={conversionUnits.output} id='output-dropdown' defaultValue='Celsius' onChange={(event) => handleUnitChange('output', event.target.value)}>
+          <select value={conversionUnits.output} id='output-dropdown' onChange={(event) => handleUnitChange('output', event.target.value)}>
             {populateConversionDropdown()}
           </select>
           <div id='conversion-output'>

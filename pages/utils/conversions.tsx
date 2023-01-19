@@ -37,6 +37,9 @@ const categories: Categories = {
       }
     }
   }
+
+
+
   const handleConversion = (conversionUnits: any, setConvertedValue: Function) => {
     
     const input: string = conversionUnits.input, output: string = conversionUnits.output;
@@ -55,9 +58,17 @@ const categories: Categories = {
       setConvertedValue(inputValue.toString());
       return;
     }
+    let conversionType : string = '';
+    Object.keys(categories).map((item) => {
+        if (categories[item].measurements.indexOf(conversionUnits.input) !== -1) {
+            conversionType = item;
+            return;
+        }
+    })
+    const conversions = categories[conversionType].conversions;
     //Temperature
     if (input === 'Fahrenheit') {
-      const conversions = categories.Temperature.conversions;
+      //const conversions = categories.Temperature.conversions;
       switch(output) {
         case 'Celsius':
           setConvertedValue(`${conversions['F-C'](inputValue)} C.`);
@@ -67,7 +78,7 @@ const categories: Categories = {
           break; 
       }
     } else if (input === 'Celsius') {
-      const conversions = categories.Temperature.conversions;
+     // const conversions = categories.Temperature.conversions;
       switch (output) {
         case 'Fahrenheit':
           setConvertedValue(`${conversions['C-F'](inputValue)} F.`);
@@ -121,6 +132,9 @@ const categories: Categories = {
       }
     }
     //Distance
+    else if (input === 'Miles') {
+        const conversions = categories.Distance.conversions;
+    }
   }
   }
 
