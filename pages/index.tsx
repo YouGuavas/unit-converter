@@ -10,9 +10,18 @@ export default function Home() {
   const [convertedValue, setConvertedValue] = useState('0');
   
 
-  const populateConversionDropdown = () => {
+  const populateConversionDropdown = (dropdownRelevance: string) => {
+    
     return conversionMeasurements.map((item, index) => {
-      return <option key={index} value={item}>{item}</option>
+      if (dropdownRelevance=== 'input') {
+        if (item !== conversionUnits.output) {
+          return <option key={index} value={item}>{item}</option>
+        }
+      } else {
+        if (item !== conversionUnits.input) {
+          return <option key={index} value={item}>{item}</option>
+        }
+      }
     })
   }
   
@@ -27,11 +36,11 @@ export default function Home() {
   }
   
   const handleCategoryChange = (changeTo: string) => {
-    setConversionMeasurements(categories[changeTo].measurements);
+    setConversionMeasurements(Object.keys(categories[changeTo].conversions));
   }
 
   useEffect(() => {
-    setConversionMeasurements(categories.Temperature.measurements);
+    setConversionMeasurements(Object.keys(categories.Temperature.conversions));
   }, [])
 
   useEffect(() => {
@@ -61,7 +70,7 @@ export default function Home() {
         
         <div>
           <select value={conversionUnits.input} id='input-dropdown' onChange={(event) => handleUnitChange('input', event.target.value)}>
-            {populateConversionDropdown()}
+            {populateConversionDropdown('input')}
           </select>
           <label htmlFor='conversion-input'>Input: </label>
           <input type='text' id='conversion-input' name='conversion-input' defaultValue='0' onChange={() => handleConversion(conversionUnits, (x : string) => setConvertedValue(x))} />
@@ -69,7 +78,7 @@ export default function Home() {
         
         <div>
           <select value={conversionUnits.output} id='output-dropdown' onChange={(event) => handleUnitChange('output', event.target.value)}>
-            {populateConversionDropdown()}
+            {populateConversionDropdown('output')}
           </select>
           <div id='conversion-output'>
             {convertedValue}
