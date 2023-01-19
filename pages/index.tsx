@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import styles from '../styles/Home.module.scss'
 import { useEffect, useState } from 'react';
 import {categories, handleConversion} from './utils/conversions';
 
@@ -64,26 +64,30 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <select id='category-dropdown' defaultValue='Temperature' name='conversion-category' onChange={(event) => handleCategoryChange(event.target.value)}>
-          {populateCategoryDropdown()}          
-        </select>
-        
-        <div>
-          <select value={conversionUnits.input} id='input-dropdown' onChange={(event) => handleUnitChange('input', event.target.value)}>
-            {populateConversionDropdown('input')}
+        <div className={styles.lineContainer}>
+          <select className={styles.dropdown} id='category-dropdown' defaultValue='Temperature' name='conversion-category' onChange={(event) => handleCategoryChange(event.target.value)}>
+            {populateCategoryDropdown()}          
           </select>
-          <label htmlFor='conversion-input'>Input: </label>
-          <input type='text' id='conversion-input' name='conversion-input' defaultValue='0' onChange={() => handleConversion(conversionUnits, (x : string) => setConvertedValue(x))} />
         </div>
         
-        <div>
-          <select value={conversionUnits.output} id='output-dropdown' onChange={(event) => handleUnitChange('output', event.target.value)}>
+        <section className={styles.dividerSection}>
+          <div className={styles.lineContainer}>
+            <select className={styles.dropdown} value={conversionUnits.input} id='input-dropdown' onChange={(event) => handleUnitChange('input', event.target.value)}>
+              {populateConversionDropdown('input')}
+            </select>
+            <label htmlFor='conversion-input'>Input: </label>
+            <input className={styles.textInput} type='text' id='conversion-input' name='conversion-input' defaultValue='0' onChange={() => handleConversion(conversionUnits, (x : string) => setConvertedValue(x))} />
+          </div>
+        </section>
+        
+        <section className={styles.dividerSection}>
+          <select className={styles.dropdown} value={conversionUnits.output} id='output-dropdown' onChange={(event) => handleUnitChange('output', event.target.value)}>
             {populateConversionDropdown('output')}
           </select>
-          <div id='conversion-output'>
+          <div className={styles.conversionOutput} id='conversion-output'>
             {convertedValue}
           </div>
-        </div>
+        </section>
       </main>
     </>
   )
