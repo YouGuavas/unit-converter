@@ -75,7 +75,9 @@ export default function Home() {
             <select className={styles.dropdown} value={conversionUnits.input} id='input-dropdown' onChange={(event) => handleUnitChange('input', event.target.value)}>
               {populateConversionDropdown('input')}
             </select>
-            <label htmlFor='conversion-input'>Input: </label>
+          </div>
+          <div className={styles.lineContainer}>
+            <label className={styles.inputLabel} htmlFor='conversion-input'>Input: </label>
             <input className={styles.textInput} type='text' id='conversion-input' name='conversion-input' defaultValue='0' onChange={() => handleConversion(conversionUnits, (x : string) => setConvertedValue(x))} />
           </div>
         </section>
