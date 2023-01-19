@@ -33,9 +33,95 @@ const categories: Categories = {
     'Distance': {
       measurements: ['Miles', 'Yards', 'Feet', 'Inches', 'Centimeters', 'Meters', 'Kilometers'],
       conversions: {
-        'MI-KM': (mi: number) => {return mi},
+        'MI-KM': (mi: number) => {return mi*1.609},
       }
     }
   }
+  const handleConversion = (conversionUnits: any, setConvertedValue: Function) => {
+    
+    const input: string = conversionUnits.input, output: string = conversionUnits.output;
+    if (typeof window === 'object') {
+    const inputElement = document.getElementById('conversion-input');
+    let inputValue: string | number | undefined = 0;
+    if (inputElement != null) {
+      inputValue = Number((inputElement as HTMLInputElement | null)?.value);
+      if (Number.isNaN(inputValue)) {
+        alert('Please use only numbers.');
+        return; 
+      }
+    }
 
-  export default categories;
+    if (input === output) {
+      setConvertedValue(inputValue.toString());
+      return;
+    }
+    //Temperature
+    if (input === 'Fahrenheit') {
+      const conversions = categories.Temperature.conversions;
+      switch(output) {
+        case 'Celsius':
+          setConvertedValue(`${conversions['F-C'](inputValue)} C.`);
+          break;
+        case 'Kelvin':
+          setConvertedValue(`${conversions['F-K'](inputValue)} K.`);
+          break; 
+      }
+    } else if (input === 'Celsius') {
+      const conversions = categories.Temperature.conversions;
+      switch (output) {
+        case 'Fahrenheit':
+          setConvertedValue(`${conversions['C-F'](inputValue)} F.`);
+          break;
+        case 'Kelvin':
+          setConvertedValue(`${conversions['C-K'](inputValue)} K.`);
+          break;
+      }
+    } else if (input === 'Kelvin') {
+      const conversions = categories.Temperature.conversions;
+      switch (output) {
+        case 'Fahrenheit':
+          setConvertedValue(`${conversions['K-F'](inputValue)} F.`);
+          break;
+        case 'Celsius':
+          setConvertedValue(`${conversions['K-C'](inputValue)} C.`);
+          break;
+      }
+    }
+    //Weight
+    else if (input === 'Pounds') {
+      const conversions = categories.Weight.conversions;
+      switch (output) {
+        case 'Kilograms':
+          setConvertedValue(`${conversions['LB-KG'](inputValue)} kg.`);
+          break;
+        case 'Stone':
+          setConvertedValue(`${conversions['LB-ST'](inputValue).toString()} st.`);
+          break;
+      }
+    } else if (input === 'Stone') {
+      const conversions = categories.Weight.conversions;
+      switch (output) {
+        case 'Pounds':
+          setConvertedValue(`${conversions['ST-LB'](inputValue)} lb.`);
+          break;
+        case 'Kilograms':
+          setConvertedValue(`${conversions['ST-KG'](inputValue)} kg.`);
+          break;
+      }
+    } else if (input === 'Kilograms') {
+      const conversions = categories.Weight.conversions;
+      switch (output) {
+        case 'Pounds':
+          setConvertedValue(`${conversions['KG-LB'](inputValue)} lb.`);
+          break;
+        case 'Stone':
+          setConvertedValue(`${conversions['KG-ST'](inputValue)} st.`);
+          break;
+
+      }
+    }
+    //Distance
+  }
+  }
+
+  export {categories, handleConversion} 
