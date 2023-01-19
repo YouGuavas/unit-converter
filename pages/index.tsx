@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import { useEffect, useState } from 'react';
+import categories from './utils/conversions';
 
 
 export default function Home() {
@@ -8,7 +9,7 @@ export default function Home() {
   const [conversionUnits, setConversionUnits] = useState({input: '', output: ''})
   const [convertedValue, setConvertedValue] = useState('0');
   
-  /* ===================== */
+  /* =====================
   type Categories = {
     [key: string]: {
       measurements: string[];
@@ -38,6 +39,12 @@ export default function Home() {
         'ST-KG': (st: number) => {return st*6.35},
         'KG-ST': (kg: number) => {return kg/6.35},
         'KG-LB': (kg: number) => {return kg*2.205},
+      }
+    },
+    'Distance': {
+      measurements: ['Miles', 'Yards', 'Feet', 'Inches', 'Centimeters', 'Meters', 'Kilometers'],
+      conversions: {
+        'MI-KM': (mi: number) => {return mi},
       }
     }
   }
@@ -155,7 +162,7 @@ export default function Home() {
   useEffect(() => {
     setConversionMeasurements(categories.Temperature.measurements);
   }, [])
-  
+
   useEffect(() => {
     setConversionUnits({input: conversionMeasurements[0], output: conversionMeasurements[1]});
     const inputElement = (document.getElementById('conversion-input') as HTMLInputElement | null);
