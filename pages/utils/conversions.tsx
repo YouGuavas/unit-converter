@@ -7,6 +7,11 @@ type Categories = {
       };
     };
   }
+type conversionObject = {
+    [key: string]: {
+        [key: string]: Function | string
+    }
+}
 
 const categories: Categories = {
     'Temperature': {
@@ -48,7 +53,6 @@ const categories: Categories = {
       }
     },
     'Distance': {
-//      measurements: ['Miles', 'Yards', 'Feet', 'Inches', 'Centimeters', 'Meters', 'Kilometers'],
       conversions: {
         'Miles': {
             'Yards': (mi: number) => {return mi*1760},
@@ -63,8 +67,56 @@ const categories: Categories = {
             'Miles': (yd: number) => {return yd/1760},
             'Feet': (yd: number) => {return yd*3},
             'Inches': (yd: number) => {return yd*36},
+            'Centimeters': (yd: number) => {return yd*91.44},
+            'Meters': (yd: number) => {return yd*0.9144},
+            'Kilometers': (yd: number) => {return yd*0.009144},
             'abbreviation': 'yd'
-        }
+        },
+        'Feet': {
+            'Miles': (x: number) => {return x/5280},
+            'Yards': (x: number) => {return x/3},
+            'Inches': (x: number) => {return x*12},
+            'Centimeters': (x: number) => {return x*30.48},
+            'Meters': (x: number) => {return x*0.3048},
+            'Kilometers': (x: number) => {return x*0.0003048},
+            'abbreviation': 'ft'
+        },
+        'Inches': {
+            'Miles': (x: number) => {return x/63360},
+            'Yards': (x: number) => {return x/36},
+            'Feet': (x: number) => {return x/12},
+            'Centimeters': (x: number) => {return x*2.54},
+            'Meters': (x: number) => {return x*0.0254},
+            'Kilometers': (x: number) => {return x*0.0000254},
+            'abbreviation': 'in'
+        },
+        'Kilometers': {
+            'Miles': (x: number) => {return x/1.609},
+            'Yards': (x: number) => {return x/0.009144},
+            'Feet': (x: number) => {return x/0.0003048},
+            'Inches': (x: number) => {return x/0.0000254},
+            'Centimeters': (x: number) => {return x*100000},
+            'Meters': (x: number) => {return x*1000},
+            'abbreviation': 'km'
+        },
+        'Meters': {
+            'Miles': (x: number) => {return x/1609},
+            'Yards': (x: number) => {return x/0.9144},
+            'Feet': (x: number) => {return x/0.3048},
+            'Inches': (x: number) => {return x/0.0254},
+            'Centimeters': (x: number) => {return x*100},
+            'Kilometers': (x: number) => {return x/1000},
+            'abbreviation': 'm'
+        },
+        'Centimeters': {
+            'Miles': (x: number) => {return x/160900},
+            'Yards': (x: number) => {return x/91.44},
+            'Feet': (x: number) => {return x/30.48},
+            'Inches': (x: number) => {return x/2.54},
+            'Meters': (x: number) => {return x/100},
+            'Kilometers': (x: number) => {return x/100000},
+            'abbreviation': 'cm'
+        },
       }
     }
   }
@@ -100,9 +152,12 @@ const categories: Categories = {
             return;
         }
     })
-    const conversions = categories[conversionType].conversions;
+    const conversions : conversionObject = categories[conversionType].conversions;
+    const localConvertedValue = (conversions[input][output] as Function)(inputValue).toFixed(2);
     
-    setConvertedValue(`${conversions[input][output](inputValue)} ${conversions[output].abbreviation}.`)
+    
+
+    setConvertedValue(`${localConvertedValue} ${conversions[output].abbreviation}.`)
     
   }
   }
