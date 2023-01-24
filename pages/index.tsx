@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.scss'
 import { useEffect, useState } from 'react';
-import {categories, handleConversion} from './utils/conversions';
+import {categories, handleConversion} from '../utils/conversions';
 
 
 export default function Home() {
