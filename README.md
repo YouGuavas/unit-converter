@@ -6,8 +6,8 @@ This is a unit converter app built with React, Nextjs, sass, and typescript. I a
 
 First, clone and move into the repository:
 ```bash
-    git clone https://github.com/YouGuavas/unit-converter.git
-    cd unit-converter
+git clone https://github.com/YouGuavas/unit-converter.git
+cd unit-converter
 ```
 
 Then, run the development server:
