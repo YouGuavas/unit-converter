@@ -5,13 +5,13 @@ import {categories, handleConversion} from '../utils/conversions';
 
 
 export default function Home() {
+  const [inputValue, setInputValue] = useState<number>(0);
   const [conversionMeasurements, setConversionMeasurements] = useState(['', '']);
   const [conversionUnits, setConversionUnits] = useState({input: '', output: ''})
   const [convertedValue, setConvertedValue] = useState('0');
   
 
   const populateConversionDropdown = (dropdownRelevance: string) => {
-    
     return conversionMeasurements.map((item, index) => {
       if (dropdownRelevance=== 'input') {
         if (item !== conversionUnits.output) {
@@ -38,6 +38,17 @@ export default function Home() {
   const handleCategoryChange = (changeTo: string) => {
     setConversionMeasurements(Object.keys(categories[changeTo].conversions));
   }
+  const handleInputValueChange = (e: any) => {
+    const localValue = e.target.value;
+    if (!Number.isNaN(Number(localValue))) {
+      setInputValue(Number(localValue));
+    }
+    else {
+      e.target.value = inputValue;
+      alert('Please use only numbers.');
+      return; 
+    }
+  }
 
   useEffect(() => {
     setConversionMeasurements(Object.keys(categories.Temperature.conversions));
@@ -52,8 +63,8 @@ export default function Home() {
   }, [conversionMeasurements])
 
   useEffect(() => {
-    handleConversion(conversionUnits, setConvertedValue);
-  }, [conversionUnits])
+    handleConversion(conversionUnits, setConvertedValue, inputValue,);
+  }, [conversionUnits, inputValue])
 
   return (
     <>
@@ -78,7 +89,7 @@ export default function Home() {
           </div>
           <div className={styles.lineContainer}>
             <label className={styles.inputLabel} htmlFor='conversion-input'>Input: </label>
-            <input className={styles.textInput} type='text' id='conversion-input' name='conversion-input' defaultValue='0' onChange={() => handleConversion(conversionUnits, (x : string) => setConvertedValue(x))} />
+            <input className={styles.textInput} type='text' id='conversion-input' name='conversion-input' defaultValue='0'  onChange={handleInputValueChange}/>
           </div>
         </section>
         

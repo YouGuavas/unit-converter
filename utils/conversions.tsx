@@ -127,20 +127,10 @@ const categories: Categories = {
 
 
 
-  const handleConversion = (conversionUnits: any, setConvertedValue: Function) => {
+  const handleConversion = (conversionUnits: any, setConvertedValue: Function, inputValue: number, ) => {
     
     const input: string = conversionUnits.input, output: string = conversionUnits.output;
-    if (typeof window === 'object') {
-    const inputElement = document.getElementById('conversion-input');
-    let inputValue: string | number | undefined = 0;
-    if (inputElement != null) {
-      inputValue = Number((inputElement as HTMLInputElement | null)?.value);
-      if (Number.isNaN(inputValue)) {
-        alert('Please use only numbers.');
-        return; 
-      }
-    }
-
+    
     if (input === output) {
       setConvertedValue(inputValue.toString());
       return;
@@ -161,7 +151,6 @@ const categories: Categories = {
 
     setConvertedValue(`${localConvertedValue} ${conversions[output].abbreviation}.`)
     
-  }
   }
 
   export {categories, handleConversion} 
