@@ -11,6 +11,7 @@ export default function Home() {
   const [convertedValue, setConvertedValue] = useState('0');
   
 
+  //Populate dropdowns
   const populateConversionDropdown = (dropdownRelevance: string) => {
     return conversionMeasurements.map((item, index) => {
       if (dropdownRelevance=== 'input') {
@@ -30,26 +31,33 @@ export default function Home() {
       return <option key={index} value={item}>{item}</option>
     })
   }
-  
+
+  //Handle onChanges
   const handleUnitChange = (unitRelevance: string, changeTo: string) => {
     unitRelevance === 'input' ? setConversionUnits({input: changeTo, output: conversionUnits.output}) : setConversionUnits({input: conversionUnits.input, output: changeTo});
   }
-  
+
   const handleCategoryChange = (changeTo: string) => {
     setConversionMeasurements(Object.keys(categories[changeTo].conversions));
   }
+
   const handleInputValueChange = (e: any) => {
     const localValue = e.target.value;
     if (!Number.isNaN(Number(localValue))) {
+      //only update inputValue if localValue is a valid number
       setInputValue(Number(localValue));
     }
     else {
+      //delete non-valid characters from input
+      const invalidCharacter = e.target.value.slice(-1);
       e.target.value = inputValue;
-      alert('Please use only numbers.');
+      
+      alert(`Please use only numbers. \n '${invalidCharacter}' is an invalid character.`);
       return; 
     }
   }
 
+  //Automatic updates
   useEffect(() => {
     setConversionMeasurements(Object.keys(categories.Temperature.conversions));
   }, [])
