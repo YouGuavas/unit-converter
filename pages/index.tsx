@@ -42,12 +42,13 @@ export default function Home() {
   }
 
   const handleInputValueChange = (e: any) => {
-    const localValue = e.target.value;
+    const localValue = e.target.value.split(',').join('');
+    const exceptions = new Set(['.', '-'])
     if (!Number.isNaN(Number(localValue))) {
       //only update inputValue if localValue is a valid number
       setInputValue(Number(localValue));
     }
-    else {
+    else if (!exceptions.has(localValue)) {
       //delete non-valid characters from input
       const invalidCharacter = e.target.value.slice(-1);
       e.target.value = inputValue;
